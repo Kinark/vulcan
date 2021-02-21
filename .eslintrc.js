@@ -18,7 +18,7 @@ module.exports = {
       'object-curly-newline': 0,
       semi: 0,
       'linebreak-style': 0,
-      allowThen: 'true',
+      allowThen: 0,
       indent: 'off',
       'arrow-parens': ['off'],
       'compat/compat': 'off',
