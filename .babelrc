@@ -1,0 +1,27 @@
+{
+   "presets": [
+      [
+         "@babel/preset-env",
+         {
+            "targets": { "node": 7 },
+            "useBuiltIns": "usage",
+            "corejs": "3"
+         }
+      ],
+      "@babel/preset-react"
+   ],
+   "plugins": ["transform-class-properties", "add-module-exports", "react-hot-loader/babel"],
+   "env": {
+      "production": {
+         "plugins": [
+            "transform-react-remove-prop-types",
+            "@babel/transform-react-inline-elements",
+            "dev-expression",
+            ["babel-plugin-styled-components", { "displayName": false }]
+         ]
+      },
+      "development": {
+         "plugins": [["babel-plugin-styled-components", { "displayName": true }]]
+      }
+   }
+}
