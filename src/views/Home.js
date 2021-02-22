@@ -198,7 +198,6 @@ const Home = () => {
             </Button>
          </form>
          <div>
-            Code
             {!!componentsCode.length &&
                componentsCode.map(({ name, id, code }) => (
                   <Component key={id}>
