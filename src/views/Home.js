@@ -63,6 +63,7 @@ const dictionary = {
 
 const prettierConfig = {
    plugins: [parserBabel, parserHtml, parserpostCss],
+   parser: 'babel',
    arrowParens: 'always',
    bracketSpacing: true,
    embeddedLanguageFormatting: 'auto',
@@ -289,6 +290,7 @@ const Tutorial = styled.div`
    left: 20px;
    opacity: 0.25;
    transition: opacity 150ms;
+   z-index: -1;
    &:hover {
       opacity: 1;
    }
@@ -305,6 +307,7 @@ const Component = styled.div`
    padding: 15px 25px;
    border-radius: 10px;
    border: solid 2px black;
+   background: white;
    h2 {
       margin-top: 0;
    }
