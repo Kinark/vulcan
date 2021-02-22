@@ -1,7 +1,7 @@
 const path = require('path')
 // const glob = require('glob')
 
-const MinifyJsPlugin = require('babel-minify-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 const ImageminPlugin = require('imagemin-webpack-plugin').default
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -67,8 +67,12 @@ module.exports = merge(
             { test: /\.(png|jp(e*)g|svg|ico|gif)$/, use: [imgUrlLoader, imgLoader] }
          ]
       },
+      optimization: {
+         minimize: true,
+         minimizer: [new TerserPlugin()]
+      },
       plugins: [
-         new MinifyJsPlugin(),
+         // new MinifyJsPlugin(),
          new CleanWebpackPlugin({ cleanAfterEveryBuildPatterns: ['dist/**/*'] }),
          new ImageminPlugin(),
          new WebpackManifestPlugin(ManifestPluginConfig),
