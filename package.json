@@ -1,7 +1,7 @@
 {
-   "name": "elara-boilerplate",
+   "name": "vulcan",
    "version": "1.0.0",
-   "description": "A dead-simple react/sass boilerplate.",
+   "description": "A figma to react/styled-components converter.",
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
       "start": "cross-env NODE_ENV=development webpack serve --config ./config/webpack.dev.js",
