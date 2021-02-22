@@ -13,6 +13,9 @@ import FigmaEmbed from 'react-figma-embed'
 import urlencode from 'urlencode'
 import { Collapse } from 'react-collapse'
 import copy from 'copy-to-clipboard'
+import ReactTooltip from 'react-tooltip'
+
+import fileIdHint from './fileIdHint.png'
 
 // import env from '../../.env'
 
@@ -171,13 +174,14 @@ const Home = () => {
 
    return (
       <Wrapper>
+         <StyledTooltip html clickable delayHide={1000} type="light" place="right" effect="solid" />
          <Logo>Vulcan</Logo>
          <Description>
             Need to transform your figma auto-layouted components in React/Styled-components code?
             <br />
             Vulcan can help.
          </Description>
-         <StepsWrapper>
+         <Tutorial>
             <Steps>
                <h3>Just follow the steps</h3>
                <ul>
@@ -186,16 +190,16 @@ const Home = () => {
                   <li>Drop your actual components inside each frame.</li>
                   <li>Let Vulcan do the work.</li>
                </ul>
+               <small>Tip: hover the inputs to get hints.</small>
             </Steps>
-            <h2>It's simple!</h2>
-         </StepsWrapper>
+         </Tutorial>
          <form autoComplete="off" onSubmit={getFile}>
             <input autoComplete="off" type="hidden" />
-            <Input>
+            <Input data-tip="<a href='https://www.figma.com/developers/api#access-tokens'>Get API Token.</a>">
                <label htmlFor="token">Token</label>
                <input id="token" type="text" value={token} onChange={setInput(setToken)} />
             </Input>
-            <Input>
+            <Input data-place="right" data-tip={`<img style="border-radius: 5px;" src=${fileIdHint} width="350" />`}>
                <label htmlFor="fileId">File ID:</label>
                <input id="fileId" type="text" value={fileId} onChange={setInput(setFileId)} />
             </Input>
@@ -235,6 +239,26 @@ const Code = ({ code }) => {
    )
 }
 
+const StyledTooltip = styled(ReactTooltip)`
+   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+   border-radius: 5px !important;
+`;
+
+const Tutorial = styled.div`
+   position: fixed;
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+   border-radius: 20px;
+   padding: 10px 20px;
+   width: 300px;
+   bottom: 20px;
+   left: 20px;
+   opacity: 0.25;
+   transition: opacity 150ms;
+   &:hover {
+      opacity: 1;
+   }
+`
+
 const Logo = styled.h1`
    margin-bottom: 10px;
 `
@@ -265,12 +289,6 @@ const Description = styled.p`
    margin: 0 0 30px 0;
 `
 
-const StepsWrapper = styled.div`
-   display: flex;
-   align-items: center;
-   justify-content: center;
-`
-
 const Steps = styled.div`
    text-align: left;
    h3 {
@@ -280,8 +298,6 @@ const Steps = styled.div`
       color: #424242;
       margin-top: 0;
       padding-left: 20px;
-      padding-right: 100px;
-      width: 500px;
    }
 `
 

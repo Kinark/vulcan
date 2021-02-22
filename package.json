@@ -100,6 +100,7 @@
       "react-helmet": "^6.1.0",
       "react-router-dom": "^5.2.0",
       "react-syntax-highlighter": "^15.4.3",
+      "react-tooltip": "^4.2.14",
       "styled-components": "^5.2.1",
       "sweetalert2": "^10.15.5",
       "sweetalert2-react-content": "^3.3.1",
