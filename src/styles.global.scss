@@ -1,7 +1,16 @@
-@import '~/components/Ceres/ceres.scss';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
 
 *:focus {
    outline: none;
+}
+
+html,
+body {
+   margin: 0;
+}
+
+body {
+   font-family: 'Noto Sans TC', sans-serif;
 }
 
 button {
@@ -12,9 +21,13 @@ button {
 
 .switch-wrapper {
    position: relative;
- }
-  
- .switch-wrapper > div {
+}
+
+.switch-wrapper > div {
    position: absolute;
    width: 100%;
- }
+}
+
+.ReactCollapse--collapse {
+   transition: height 500ms;
+}

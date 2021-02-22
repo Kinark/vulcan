@@ -87,16 +87,21 @@
    },
    "dependencies": {
       "axios": "^0.21.1",
+      "camelcase": "^6.2.0",
+      "copy-to-clipboard": "^3.3.1",
       "core-js": "3",
       "prettier": "^2.2.1",
       "prop-types": "^15.7.2",
       "react": "^17.0.1",
+      "react-collapse": "^5.1.0",
       "react-dom": "^17.0.1",
+      "react-figma-embed": "^1.0.1",
       "react-helmet": "^6.1.0",
       "react-router-dom": "^5.2.0",
       "react-syntax-highlighter": "^15.4.3",
       "styled-components": "^5.2.1",
       "sweetalert2": "^10.15.5",
-      "sweetalert2-react-content": "^3.3.1"
+      "sweetalert2-react-content": "^3.3.1",
+      "urlencode": "^1.1.0"
    }
 }
