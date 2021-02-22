@@ -207,15 +207,19 @@ const Home = () => {
                {loading ? 'Vulcan is working...' : 'I CALL YOU, VULCAN!'}
             </Button>
          </form>
-         <div>
+         <Components>
             {!!componentsCode.length &&
                componentsCode.map(({ name, id, code }) => (
                   <Component key={id}>
-                     <h2>{name}</h2>
-                     <FigmaEmbed url={`https://www.figma.com/proto/${fileId}?node-id=${urlencode(id)}`} />
-                     <Code code={code} />
+                     <Code code={code} fileId={fileId} id={id} name={name} />
                   </Component>
                ))}
+         </Components>
+         <div>
+            Made with <Heart>&#9829;</Heart> by{' '}
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/Kinark">
+               Kinark
+            </a>
          </div>
       </Wrapper>
    )
@@ -223,26 +227,57 @@ const Home = () => {
 
 export default Home
 
-const Code = ({ code }) => {
+const Code = ({ code, name, fileId, id }) => {
    const [showing, setShowing] = useState(false)
+   const [collapsed, setCollapsed] = useState(false)
    const formattedCode = prettier.format(code, prettierConfig)
    return (
       <div>
-         <Button onClick={() => setShowing((prev) => !prev)}>{showing ? 'Hide code' : 'Show code'}</Button>
-         <Button onClick={() => copy(formattedCode)}>Copy code</Button>
-         <Collapse isOpened={showing}>
-            <SyntaxHighlighter language="javascript" style={docco}>
-               {formattedCode}
-            </SyntaxHighlighter>
+         <ComponentTitleBar>
+            <h2>{name}</h2>
+            <Button onClick={() => setCollapsed((prev) => !prev)}>{collapsed ? 'Hide component' : 'Show component'}</Button>
+         </ComponentTitleBar>
+         <Collapse isOpened={collapsed}>
+            <ComponentContent>
+               <FigmaEmbed url={`https://www.figma.com/proto/${fileId}?node-id=${urlencode(id)}`} />
+               <Button onClick={() => setShowing((prev) => !prev)}>{showing ? 'Hide code' : 'Show code'}</Button>
+               <Button onClick={() => copy(formattedCode)}>Copy code</Button>
+               <Collapse isOpened={showing}>
+                  <SyntaxHighlighter language="javascript" style={docco}>
+                     {formattedCode}
+                  </SyntaxHighlighter>
+               </Collapse>
+            </ComponentContent>
          </Collapse>
       </div>
    )
 }
 
+const ComponentContent = styled.div`
+   padding-top: 1rem;
+`
+
+const ComponentTitleBar = styled.div`
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   h2 {
+      margin: 0;
+   }
+`
+
+const Heart = styled.span`
+   color: #e25555;
+`
+
+const Components = styled.div`
+   margin: 2rem 0;
+`
+
 const StyledTooltip = styled(ReactTooltip)`
    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
    border-radius: 5px !important;
-`;
+`
 
 const Tutorial = styled.div`
    position: fixed;
