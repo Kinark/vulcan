@@ -14,12 +14,12 @@ import urlencode from 'urlencode'
 import { Collapse } from 'react-collapse'
 import copy from 'copy-to-clipboard'
 
-import env from '../../.env'
+// import env from '../../.env'
 
 const api = axios.create({
    baseURL: 'https://api.figma.com/v1',
    timeout: 10000,
-   headers: { 'X-FIGMA-TOKEN': env.PERSONAL_TOKEN }
+   // headers: { 'X-FIGMA-TOKEN': env.PERSONAL_TOKEN }
 })
 
 const makeTag = (el) => {
@@ -81,8 +81,8 @@ const prettierConfig = {
 
 const Home = () => {
    const [loading, setLoading] = useState(false)
-   const [token, setToken] = useState(env.PERSONAL_TOKEN || '')
-   const [fileId, setFileId] = useState(env.FILE_ID || '')
+   const [token, setToken] = useState('')
+   const [fileId, setFileId] = useState('')
    const [file, setFile] = useState(null)
    const [componentsCode, setComponentsCode] = useState([])
 
