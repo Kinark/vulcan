@@ -8,7 +8,7 @@ import AppRoutes from '~/components/AppRoutes';
 
 const App = () => (
    <BrowserRouter>
-      <Metas title="Sample Website" description="" />
+      <Metas title="Vulcan" description="" />
       <Favicon />
       <AppRoutes />
    </BrowserRouter>
