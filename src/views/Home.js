@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
+import React, { useState, useEffect, useRef } from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import prettier from 'prettier/standalone'
 import parserBabel from 'prettier/parser-babel'
@@ -18,7 +18,7 @@ import copy from 'copy-to-clipboard'
 
 const api = axios.create({
    baseURL: 'https://api.figma.com/v1',
-   timeout: 10000,
+   timeout: 10000
    // headers: { 'X-FIGMA-TOKEN': env.PERSONAL_TOKEN }
 })
 
@@ -85,6 +85,7 @@ const Home = () => {
    const [fileId, setFileId] = useState('')
    const [file, setFile] = useState(null)
    const [componentsCode, setComponentsCode] = useState([])
+   const currentInterceptor = useRef(null)
 
    const setInput = (func) => (e) => func(e.target.value)
 
@@ -153,7 +154,11 @@ const Home = () => {
    }
 
    useEffect(() => {
-      axios.interceptors.request.use((config) => {
+      if (!token) return
+      if (currentInterceptor.current) api.interceptors.request.eject(currentInterceptor.current)
+      currentInterceptor.current = api.interceptors.request.use((config) => {
+         console.log('token')
+         console.log(token)
          config.headers['X-FIGMA-TOKEN'] = token
          return config
       })
@@ -184,7 +189,8 @@ const Home = () => {
             </Steps>
             <h2>It's simple!</h2>
          </StepsWrapper>
-         <form onSubmit={getFile}>
+         <form autoComplete="off" onSubmit={getFile}>
+            <input autoComplete="off" type="hidden" />
             <Input>
                <label htmlFor="token">Token</label>
                <input id="token" type="text" value={token} onChange={setInput(setToken)} />
@@ -193,7 +199,7 @@ const Home = () => {
                <label htmlFor="fileId">File ID:</label>
                <input id="fileId" type="text" value={fileId} onChange={setInput(setFileId)} />
             </Input>
-            <Button loading={loading} type="submit">
+            <Button $loading={loading} type="submit">
                {loading ? 'Vulcan is working...' : 'I CALL YOU, VULCAN!'}
             </Button>
          </form>
@@ -218,7 +224,7 @@ const Code = ({ code }) => {
    const formattedCode = prettier.format(code, prettierConfig)
    return (
       <div>
-         <Button onClick={() => setShowing(!showing)}>{showing ? 'Hide code' : 'Show code'}</Button>
+         <Button onClick={() => setShowing((prev) => !prev)}>{showing ? 'Hide code' : 'Show code'}</Button>
          <Button onClick={() => copy(formattedCode)}>Copy code</Button>
          <Collapse isOpened={showing}>
             <SyntaxHighlighter language="javascript" style={docco}>
@@ -304,7 +310,7 @@ const Input = styled.label`
       justify-content: center;
    }
    input {
-      text-align: right;
+      text-align: center;
       padding: 0 10px;
       border-radius: 0 5px 5px 0;
       flex-grow: 1;
@@ -314,9 +320,9 @@ const Input = styled.label`
 
 const Button = styled.button`
    display: inline-block;
-   background: ${({ loading }) => (loading ? 'gray' : 'blueviolet')};
-   pointer-events: ${({ loading }) => (loading ? 'none' : 'all')};
-   cursor: ${({ loading }) => (loading ? 'default' : 'pointer')};
+   background: ${({ $loading }) => ($loading ? 'gray' : 'blueviolet')};
+   pointer-events: ${({ $loading }) => ($loading ? 'none' : 'all')};
+   cursor: ${({ $loading }) => ($loading ? 'default' : 'pointer')};
    color: white;
    padding: 10px 20px;
    text-align: center;
